@@ -24,7 +24,8 @@ export default function Card({
 }) {
   const { id, value, url, updated_at, categories = [] } = joke;
 
-  const difference = (Date.now() - new Date(updated_at)) / 1000;
+  const difference = (Date.now() - new Date(updated_at).getTime()) / 1000;
+
   const lastUpdate = Math.round(difference / 60 / 60);
 
   return (
@@ -49,12 +50,14 @@ export default function Card({
             <img src={link} alt="link" />
           </Id>
           {value}
-          <Details>
-            <p>Last update: {lastUpdate} hours ago</p>
-            {categories.length > 0 && (
-              <Category isChecked>{categories[0]}</Category>
-            )}
-          </Details>
+          {lastUpdate && (
+            <Details>
+              <p>Last update: {lastUpdate} hours ago</p>
+              {categories.length > 0 && (
+                <Category isChecked>{categories[0]}</Category>
+              )}
+            </Details>
+          )}
         </InfoSection>
       </CardContent>
     </Wrapper>
