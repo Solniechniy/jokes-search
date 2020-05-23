@@ -68,7 +68,7 @@ const Body = styled.section`
   box-sizing: content-box;
   padding: 40px 140px;
 
-  width: calc(70vw - 280px);
+  width: calc(67vw - 280px);
   overflow-y: auto;
   max-height: 100vh;
   @media (min-width: 320px) and (max-width: 1280px) {
@@ -194,7 +194,7 @@ const Favorites = styled.section`
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   position: fixed;
 `;
 

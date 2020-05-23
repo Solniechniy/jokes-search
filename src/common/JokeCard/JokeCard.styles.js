@@ -29,6 +29,7 @@ const IconSection = styled.div`
 const InfoSection = styled.div`
   width: calc(100% - 60px);
   margin-left: 20px;
+  word-break: break-word;
 `;
 
 const Id = styled.div`
