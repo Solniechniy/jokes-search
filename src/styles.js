@@ -160,7 +160,8 @@ const SubmitButton = styled.button`
 `;
 
 const Favorites = styled.section`
-  width: 30vw;
+  width: 33vw;
+  min-width: 480px;
   height: 100vh;
   background-color: #f8f8f8;
   max-height: 100vh;

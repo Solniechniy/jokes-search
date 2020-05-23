@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   background: ${(props) => (props.inverse ? "#fff" : "#F8F8F8")};
   border-radius: 20px;
   width: 100%;
-  padding: 67px 40px 40px 40px;
+  padding: 48px 30px 12px 26px;
   position: relative;
   margin: 20px 0;
   @media (min-width: 320px) and (max-width: 1280px) {
