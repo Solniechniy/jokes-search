@@ -1,151 +1,21 @@
 import React, { useState, useEffect } from "react";
-import RadioButton from "./common/RadioButton";
-import JokeCard from "./common/JokeCard";
-import styled from "styled-components";
+import RadioButton from "./common/RadioButton/RadioButton";
+import JokeCard from "./common/JokeCard/JokeCard";
 import favIcon from "./icons/fav.svg";
 import close from "./icons/close.svg";
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  h1 {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 28px;
-  }
-`;
-
-const FavoritesHeader = styled.header`
-  display: flex;
-  justify-content: space-between;
-  h2 {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 28px;
-    color: #ababab;
-  }
-  @media (min-width: 481px) and (max-width: 1280px) {
-    justify-content: flex-end;
-    h2 {
-      display: none;
-    }
-  }
-`;
-
-const SideBarButton = styled.div`
-  p {
-    margin-left: 10px;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 28px;
-    color: #ababab;
-  }
-
-  display: none;
-  @media (min-width: 481px) and (max-width: 1280px) {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-  }
-`;
-
-const Body = styled.section`
-  box-sizing: content-box;
-  padding: 40px 140px;
-  
-  width: calc(70vw - 280px);
-  overflow-y: auto;
-  max-height: 100vh;
-  @media (min-width: 481px) and (max-width: 1280px) {
-    padding: 40px 40px;
-    width: 100%;
-  }
-}
-`;
-
-const Introduction = styled.div`
-  margin: 78px 0 43px;
-  h1 {
-    font-weight: bold;
-    font-size: 32px;
-    line-height: 44px;
-  }
-  p {
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 44px;
-  }
-`;
-
-const Category = styled.button`
-  outline: none;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  color: ${(props) => (props.isChecked ? "black" : "#ABABAB")};
-  background: ${(props) => (props.isChecked ? "#F8F8F8" : "white")};
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border: 2px solid #f8f8f8;
-  box-sizing: border-box;
-  border-radius: 6px;
-  padding: 6px 15px;
-  margin: 10px;
-`;
-
-const SearchInput = styled.input`
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 22px;
-  color: #333;
-  outline: none;
-  border: 2px solid #333333;
-  box-sizing: border-box;
-  border-radius: 10px;
-  width: 100%;
-  min-height: 30px;
-  padding: 10px 0 10px 15px;
-  ::placeholder {
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 22px;
-    color: #ababab;
-  }
-`;
-
-const SubmitButton = styled.button`
-  background: linear-gradient(92.01deg, #8ea7ff 0%, #7291ff 100%);
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 22px;
-  color: #ffffff;
-  padding: 10px 40px;
-  outline: none;
-  margin 20px 0 30px;
-`;
-
-const Favorites = styled.section`
-  width: 30vw;
-  height: 100vh;
-  background-color: #f8f8f8;
-  max-height: 100vh;
-  overflow-y: auto;
-  padding: 40px 40px 0 40px;
-  @media (min-width: 481px) and (max-width: 1280px) {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: ${(props) => (props.isOpen ? "block" : "none")};
-    width: 40vw;
-    min-width: 480px;
-    transition: all 0.25s ease;
-  }
-`;
+import {
+  Wrapper,
+  Header,
+  Favorites,
+  FavoritesHeader,
+  SubmitButton,
+  SearchInput,
+  SideBarButton,
+  Category,
+  Introduction,
+  Body,
+  Background,
+} from "./styles";
 
 const categories = ["animal", "career", "celebrity", "dev"];
 
@@ -227,7 +97,9 @@ function App() {
 
   return (
     <Wrapper>
-      <Body>
+      <Background isOpen={isFavOpen} onClick={() => setIsFavOpen(!isFavOpen)} />
+
+      <Body isOpen={isFavOpen}>
         <Header>
           <h1>MSI 2020</h1>
           <SideBarButton onClick={() => setIsFavOpen(!isFavOpen)}>
