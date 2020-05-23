@@ -97,8 +97,6 @@ function App() {
 
   return (
     <Wrapper>
-      <Background isOpen={isFavOpen} onClick={() => setIsFavOpen(!isFavOpen)} />
-
       <Body isOpen={isFavOpen}>
         <Header>
           <h1>MSI 2020</h1>
@@ -171,6 +169,7 @@ function App() {
             ))}
         </>
       </Body>
+      <Background isOpen={isFavOpen} onClick={() => setIsFavOpen(!isFavOpen)} />
       <Favorites isOpen={isFavOpen}>
         <FavoritesHeader>
           <h2>Favorites</h2>

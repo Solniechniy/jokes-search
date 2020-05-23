@@ -157,6 +157,7 @@ const SubmitButton = styled.button`
   padding: 10px 40px;
   outline: none;
   margin 20px 0 30px;
+  border: none;
 `;
 
 const Favorites = styled.section`
@@ -187,12 +188,14 @@ const Favorites = styled.section`
       isOpen ? "translateX(0)" : "translateX(100%)"};
     width: 100vw;
     transition: all 0.25s ease;
+    min-width: 100px;
   }
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  position: fixed;
 `;
 
 export {
