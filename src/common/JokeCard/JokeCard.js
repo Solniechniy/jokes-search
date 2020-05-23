@@ -24,7 +24,8 @@ export default function Card({
 }) {
   const { id, value, url, updated_at, categories = [] } = joke;
 
-  const difference = (Date.now() - new Date(updated_at).getTime()) / 1000;
+  const difference =
+    (Date.now() - new Date(updated_at.replace(" ", "T")).getTime()) / 1000; // need for ios support
 
   const lastUpdate = Math.round(difference / 60 / 60);
 
