@@ -46,14 +46,13 @@ function App() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let request = "http://127.0.0.1:3017/jokes/";
+    let request = "https://jokes-back.herokuapp.com/jokes/";
     if (selectedOption === "random") {
       request += "random";
     }
     if (selectedOption === "categories" && selectedCategory.length > 0) {
       request += `category?category=${selectedCategory}`;
     }
-    console.log(request);
 
     try {
       let response;
@@ -62,7 +61,6 @@ function App() {
       } else {
         response = await fetch(request, {
           method: "POST",
-          mode: "no-cors",
 
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +73,7 @@ function App() {
       }
       const data = await response.json();
       console.log(
-        JSON.stringify({
+        JSON.stringify(request, {
           category: selectedCategory,
           content: inputValue,
         })
