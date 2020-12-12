@@ -22,7 +22,7 @@ export default function Card({
   addJoke,
   deleteJoke,
 }) {
-  const { id, value, url, updated_at, categories = [] } = joke;
+  const { id, content, updated_at, categories = [] } = joke;
 
   const difference =
     (Date.now() - new Date(updated_at.replace(" ", "T")).getTime()) / 1000; // need for ios support
@@ -43,14 +43,14 @@ export default function Card({
           <img src={logo} alt="logo" />
         </IconSection>
         <InfoSection>
-          <Id>
+          {/* <Id>
             ID:{" "}
             <a href={url} target="_blank">
               {id}
             </a>
             <img src={link} alt="link" />
-          </Id>
-          {value}
+          </Id> */}
+          {content}
           {lastUpdate && (
             <Details>
               <p>Last update: {lastUpdate} hours ago</p>

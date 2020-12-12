@@ -26,7 +26,7 @@ const radioButtons = [
 ];
 
 const checkFavorite = (favorites, joke) => {
-  return favorites.some((favorite) => favorite.id === joke.id);
+  return favorites.some((favorite) => favorite._id === joke._id);
 };
 
 function App() {
@@ -46,34 +46,56 @@ function App() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let request = "https://api.chucknorris.io/jokes/";
-    if (selectedOption === "random" || selectedOption === "categories") {
+    let request = "http://127.0.0.1:3017/jokes/";
+    if (selectedOption === "random") {
       request += "random";
-      if (selectedOption === "categories" && selectedCategory.length > 0) {
-        request += `?category=${selectedCategory}`;
-      }
-    } else {
-      request += `search?query=${inputValue}`;
     }
+    if (selectedOption === "categories" && selectedCategory.length > 0) {
+      request += `category?category=${selectedCategory}`;
+    }
+    console.log(request);
+
     try {
-      const response = await fetch(request);
+      let response;
+      if (selectedOption === "categories" || selectedOption === "random") {
+        response = await fetch(request);
+      } else {
+        response = await fetch(request, {
+          method: "POST",
+          mode: "no-cors",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            category: selectedCategory,
+            content: inputValue,
+          }), // body data type must match "Content-Type" header
+        });
+      }
       const data = await response.json();
+      console.log(
+        JSON.stringify({
+          category: selectedCategory,
+          content: inputValue,
+        })
+      );
       if (selectedOption === "random" || selectedOption === "categories") {
         setJokes([data]);
       } else {
-        setJokes(data.result);
+        setJokes(setInputValue(""));
       }
     } catch (e) {
       console.log(e);
     }
   };
 
-  const addFavorite = ({ id, value, url, updated_at }) => {
-    if (!favorites.some((joke) => joke.id === id)) {
+  const addFavorite = ({ _id, value, url, updated_at }) => {
+    if (!favorites.some((joke) => joke._id === _id)) {
       setFavorites([
         ...favorites,
         {
-          id: id,
+          _id: _id,
           value: value,
           url: url,
           updated_at: updated_at,
@@ -83,14 +105,14 @@ function App() {
         "fav",
         JSON.stringify([
           ...favorites,
-          { id: id, value: value, updated_at: updated_at, url: url },
+          { _id: _id, value: value, updated_at: updated_at, url: url },
         ])
       );
     }
   };
 
-  const deleteFavorite = (id) => {
-    let newFavorites = favorites.filter((joke) => joke.id !== id);
+  const deleteFavorite = (_id) => {
+    let newFavorites = favorites.filter((joke) => joke._id !== _id);
     setFavorites(newFavorites);
     localStorage.setItem("fav", JSON.stringify(newFavorites));
   };
@@ -140,7 +162,7 @@ function App() {
               ))}
           </>
           <RadioButton
-            label={"Search"}
+            label={"Create joke"}
             value={"search"}
             selectedOption={selectedOption}
             handleChange={setSelectedOption}
@@ -153,8 +175,25 @@ function App() {
                 onChange={(e) => setInputValue(e.target.value)}
               />
             )}
+
+            {selectedOption === "search" &&
+              categories &&
+              categories.map((category, index) => (
+                <Category
+                  key={index}
+                  isChecked={selectedCategory === category}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedCategory(category);
+                  }}
+                >
+                  {category}
+                </Category>
+              ))}
           </>
-          <SubmitButton type="submit">Get a joke</SubmitButton>
+          <SubmitButton type="submit">
+            {selectedOption === "search" ? "Create joke" : "Get a joke"}
+          </SubmitButton>
         </form>
         <>
           {jokes &&
