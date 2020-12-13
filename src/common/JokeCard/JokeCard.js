@@ -22,10 +22,9 @@ export default function Card({
   addJoke,
   deleteJoke,
 }) {
-  const { id, content, updated_at, categories = [] } = joke;
+  const { _id, content, updatedAt, categories = [] } = joke;
 
-  const difference =
-    (Date.now() - new Date(updated_at.replace(" ", "T")).getTime()) / 1000; // need for ios support
+  const difference = (Date.now() - new Date(updatedAt).getTime()) / 1000; // need for ios support
 
   const lastUpdate = Math.round(difference / 60 / 60);
 
@@ -33,7 +32,7 @@ export default function Card({
     <Wrapper inverse={inverse}>
       <Heart>
         <img
-          onClick={() => (isFavorite ? deleteJoke(id) : addJoke(joke))}
+          onClick={() => (isFavorite ? deleteJoke(_id) : addJoke(joke))}
           src={isFavorite ? heartFull : heartEmpty}
           alt="heart"
         />
@@ -43,15 +42,11 @@ export default function Card({
           <img src={logo} alt="logo" />
         </IconSection>
         <InfoSection>
-          {/* <Id>
-            ID:{" "}
-            <a href={url} target="_blank">
-              {id}
-            </a>
-            <img src={link} alt="link" />
-          </Id> */}
+          <Id>
+            ID: <a>{_id}</a>
+          </Id>
           {content}
-          {lastUpdate && (
+          {updatedAt && (
             <Details>
               <p>Last update: {lastUpdate} hours ago</p>
               {categories.length > 0 && (

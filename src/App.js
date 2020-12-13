@@ -73,6 +73,7 @@ function App() {
       }
       const data = await response.json();
       console.log(
+        data,
         JSON.stringify(request, {
           category: selectedCategory,
           content: inputValue,
@@ -84,18 +85,18 @@ function App() {
         setJokes(setInputValue(""));
       }
     } catch (e) {
+      setJokes([]);
       console.log(e);
     }
   };
 
-  const addFavorite = ({ _id, value, url, updated_at }) => {
+  const addFavorite = ({ _id, content, url, updated_at }) => {
     if (!favorites.some((joke) => joke._id === _id)) {
       setFavorites([
         ...favorites,
         {
           _id: _id,
-          value: value,
-          url: url,
+          content: content,
           updated_at: updated_at,
         },
       ]);
@@ -103,14 +104,17 @@ function App() {
         "fav",
         JSON.stringify([
           ...favorites,
-          { _id: _id, value: value, updated_at: updated_at, url: url },
+          { _id: _id, content: content, updated_at: updated_at, url: url },
         ])
       );
     }
   };
 
   const deleteFavorite = (_id) => {
-    let newFavorites = favorites.filter((joke) => joke._id !== _id);
+    let newFavorites = favorites.filter((joke) => {
+      console.log("joke", joke._id, _id);
+      return joke._id !== _id;
+    });
     setFavorites(newFavorites);
     localStorage.setItem("fav", JSON.stringify(newFavorites));
   };
@@ -169,7 +173,7 @@ function App() {
             {selectedOption === "search" && (
               <SearchInput
                 value={inputValue}
-                placeholder={"Free text search..."}
+                placeholder={"Joke text..."}
                 onChange={(e) => setInputValue(e.target.value)}
               />
             )}
